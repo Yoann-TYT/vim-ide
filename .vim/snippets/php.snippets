@@ -1,0 +1,14 @@
+snippet f
+	function ${1}(${3})
+	{
+		${0}
+	}
+snippet class
+	<?php
+
+	namespace ${1:`substitute(substitute(expand("%:h"), 'v^w+/(u)', '1', ''), '/', '\', 'g')`};
+
+	class ${2:`Filename('', 'myClass')`}
+	{
+	    ${3}
+	}
