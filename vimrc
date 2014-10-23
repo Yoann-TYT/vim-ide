@@ -48,18 +48,40 @@ NeoBundle 'groenewege/vim-less'
 NeoBundle "MarcWeber/vim-addon-mw-utils"
 NeoBundle "tomtom/tlib_vim"
 NeoBundle "garbas/vim-snipmate"
+NeoBundle "scrooloose/nerdcommenter"
 
 " Fantastic use...
 NeoBundle 'arnaud-lb/vim-php-namespace'
-noremap <Leader>u :call PhpInsertUse()<CR>
-noremap <Leader>e :call PhpExpandClass()<CR>
+noremap <silent> <Leader>u :call PhpInsertUse()<CR>
+inoremap <silent> <Leader>u :call PhpInsertUse()<CR>
+noremap <silent> <Leader>e :call PhpExpandClass()<CR>
+inoremap <silent> <Leader>e :call PhpExpandClass()<CR>
 " Vum symfony
 
 NeoBundle 'docteurklein/vim-symfony'
 let g:symfony_enable_shell_mapping = 0 "disable the mapping of symfony console
 
+NeoBundle 'majutsushi/tagbar'
+nmap <F8> :TagbarToggle<CR>
+
+NeoBundle 'mattn/emmet-vim'
+nmap <silent> <Leader>z :call emmet#expandAbbr(3,"")<CR>
+imap <silent> <Leader>z <Esc>h :call emmet#expandAbbr(3,"")<CR>
+
+NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'airblade/vim-gitgutter'
 " Use your key instead of default key which is <C-F>
 noremap <Leader>f :execute ":!"g:symfony_enable_shell_cmd<CR>
+
+NeoBundle 'godlygeek/tabular.git'
+nmap <Leader>a= :Tabularize /=<CR>
+imap <Leader>a= :Tabularize /=<CR>
+nmap <Leader>a: :Tabularize /:\zs<CR>
+imap <Leader>a: :Tabularize /:\zs<CR>
+
+NeoBundle 'ivalkeen/vim-ctrlp-tjump'
+nnoremap <c-]> :CtrlPtjump<cr>
+vnoremap <c-]> :CtrlPtjumpVisual<cr>
 
 " Enjoy with guard ctags composer
 set tags+=vendor.tags
@@ -98,4 +120,13 @@ autocmd FileType javascript setlocal shiftwidth=2 softtabstop=2
 autocmd FileType less setlocal shiftwidth=2 softtabstop=2
 autocmd FileType css setlocal shiftwidth=2 softtabstop=2
 
+
+
+" Automatically create save directory if it does not exist
+au BufWrite * :call <SID>MkdirsIfNotExists(expand('<afile>:h'))
+function! <SID>MkdirsIfNotExists(directory)
+    if(!isdirectory(a:directory))
+        call system('mkdir -p '.shellescape(a:directory))
+    endif
+endfunction
 
